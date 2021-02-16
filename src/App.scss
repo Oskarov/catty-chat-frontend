@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/bootstrap";
+
+body{
+  padding: 20px 0;
+  background: rgb(242,44,68);
+  background: radial-gradient(circle, rgba(242,44,68,1) 0%, rgba(32,4,79,1) 80%);
+}
+
+.formContainer{
+  padding: 20px 40px;
+  background: white;
+  border-radius: 10px;
+}
