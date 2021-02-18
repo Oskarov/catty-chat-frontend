@@ -9,7 +9,6 @@ export const useForm = (callback, initialState = {}) => {
             ...values,
             [element.name]: element.value
         });
-        console.log(values);
     }
 
     const changeBunchValues = (bunch) =>{
