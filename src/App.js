@@ -7,9 +7,24 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Error from "./pages/Error";
 import {Container} from "react-bootstrap";
-import React from "react";
+import React, {useContext, useState, useEffect} from 'react'
+import {AuthContext, AuthProvider} from "./context/auth";
+import gql from "graphql-tag";
+import {useQuery} from "@apollo/react-hooks";
 
 function App() {
+
+    const {user, login, logout} = useContext(AuthContext);
+
+    const {data, error} = useQuery(GET_USER);
+
+    useEffect(() => {
+        if (typeof data !== 'undefined') {
+            console.log(login);
+            login(data.getUser);
+        }
+    }, [data]);
+
     return (
         <div className="App">
             <Router>
@@ -25,7 +40,18 @@ function App() {
                 </Container>
             </Router>
         </div>
-);
+    );
 }
+
+const GET_USER = gql`
+    query{
+        getUser{
+            id
+            username
+            email
+            token
+        }
+    }
+`
 
 export default App;
