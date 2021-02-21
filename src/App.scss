@@ -1,4 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
+@import "./styles/error.scss";
 
 body{
   padding: 20px 0;
@@ -10,4 +11,10 @@ body{
   padding: 20px 40px;
   background: white;
   border-radius: 10px;
+}
+
+.form-error{
+  margin: 20px 0;
+  font-size: 80%;
+  color: #dc3545;
 }

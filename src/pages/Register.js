@@ -86,7 +86,7 @@ function Register(props) {
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                    Submit
+                    Регистрация
                 </Button>
             </Form>
         </div>
