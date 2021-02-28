@@ -1,20 +1,68 @@
 @import "~bootstrap/scss/bootstrap";
 @import "./styles/error.scss";
 
-body{
+body {
   padding: 20px 0;
-  background: rgb(242,44,68);
-  background: radial-gradient(circle, rgba(242,44,68,1) 0%, rgba(32,4,79,1) 80%);
+  background: rgb(242, 44, 68);
+  background: radial-gradient(circle, rgba(242, 44, 68, 1) 0%, rgba(32, 4, 79, 1) 80%);
 }
 
-.formContainer{
+.formContainer {
   padding: 20px 40px;
   background: white;
   border-radius: 10px;
 }
 
-.form-error{
+.form-error {
   margin: 20px 0;
   font-size: 80%;
   color: #dc3545;
+}
+
+.main_menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  .main_menu_user {
+    padding-bottom: 10px;
+
+    &:hover{
+     ul{
+       display: block;
+     }
+    }
+
+    .main_menu_avatar {
+      > img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+    }
+
+    ul {
+      box-shadow: 0 0 8px 0 rgba(34, 60, 80, 0.2);
+      padding: 0;
+      border-radius: 8px;
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: #ffffff;
+
+      > li {
+        display: block;
+
+        > * {
+          display: block;
+          padding: 5px 10px;
+          color: #a71e48;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }

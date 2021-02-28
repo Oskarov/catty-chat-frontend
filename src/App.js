@@ -1,5 +1,6 @@
 import './App.scss';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import MenuBar from "./components/Menu";
 import AuthRoute from "./util/AuthRoute";
 import UserRoute from "./util/UserRoute";
 import Main from "./pages/Main";
@@ -30,6 +31,7 @@ function App() {
             <Router>
                 <Container>
                     <div className="formContainer">
+                        <MenuBar/>
                         <Switch>
                             <UserRoute exact path='/' component={Main}/>
                             <AuthRoute exact path='/register' component={Register}/>
