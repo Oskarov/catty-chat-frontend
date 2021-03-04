@@ -37,8 +37,6 @@ function Login(props) {
         }
     })
 
-    console.log(errors);
-
     function loginUser() {
         addUser();
     }

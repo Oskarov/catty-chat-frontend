@@ -66,3 +66,30 @@ body {
     }
   }
 }
+
+.user-item{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  >img{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  >div{
+    span{
+      display: block;
+    }
+
+    .user-item-name{
+      color: #8bc34a;
+    }
+
+    .user-item-message{
+      color: #607d8b;
+      font-size: 10px;
+    }
+  }
+}
