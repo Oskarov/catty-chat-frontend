@@ -1,15 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import gql from "graphql-tag";
-import {useQuery} from "@apollo/react-hooks";
+import {useQuery, useLazyQuery} from "@apollo/react-hooks";
 import {Col, Image} from "react-bootstrap";
 
 function Main(props) {
 
     const {loading, data, error} = useQuery(GET_USERS);
+    const [selectedUser, setSelectedUser] = useState(null)
 
-    const setSelectedUser = (e) =>{
+    const [getMessages, {loadingMessages, data: messagesData}] = useLazyQuery(GET_MESSAGES);
 
-    }
+   useEffect(()=>{
+        if (selectedUser){
+            getMessages({variables: { from: selectedUser}});
+        }
+   }, [selectedUser]);
+
+   if (messagesData) console.log(messagesData)
+
 
     let usersList;
     if (!data || loading){
@@ -18,7 +26,7 @@ function Main(props) {
         usersList = <p>У вас нет контактов</p>
     } else {
         usersList = data.getUsers.map(user=>(
-            <div className="user-item" key={user.username} onClick={setSelectedUser}>
+            <div className="user-item" key={user.username} onClick={() => setSelectedUser(user.username)}>
                 <Image src="user.jpg" roundedCircle/>
                 <div>
                     <span className="user-item-name">{user.username}</span>
@@ -38,9 +46,16 @@ function Main(props) {
                     {usersList}
                 </Col>
                 <Col xs={8}>
-
+                    {messagesData && messagesData.getMessages.length > 0 ? (
+                        messagesData.getMessages.map(message =>
+                            <p key={message.uuid}>
+                                {message.content}
+                            </p>
+                        )
+                    ) : (
+                        'no data'
+                    )}
                 </Col>
-
             </div>
         </div>
     );
@@ -59,6 +74,18 @@ query getUsers{
         }
     }
 }
+`
+
+const GET_MESSAGES = gql`
+    query geMessages($from: String!){
+        getMessages(from: $from){
+            uuid
+            from
+            to
+            content
+            createdAt
+        }
+    }
 `
 
 export default Main;
