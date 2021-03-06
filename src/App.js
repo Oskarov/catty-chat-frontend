@@ -21,7 +21,6 @@ function App() {
 
     useEffect(() => {
         if (typeof data !== 'undefined') {
-            console.log(login);
             login(data.getUser);
         }
     }, [data]);
