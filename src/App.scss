@@ -8,9 +8,13 @@ body {
 }
 
 .formContainer {
+  display: flex;
+  flex-direction: column;
   padding: 20px 40px;
   background: white;
   border-radius: 10px;
+  height: 95vh;
+  overflow: hidden;
 }
 
 .form-error {
@@ -21,6 +25,7 @@ body {
 
 .main_menu {
   width: 100%;
+  flex: 0 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,10 +34,10 @@ body {
   .main_menu_user {
     padding-bottom: 10px;
 
-    &:hover{
-     ul{
-       display: block;
-     }
+    &:hover {
+      ul {
+        display: block;
+      }
     }
 
     .main_menu_avatar {
@@ -67,29 +72,76 @@ body {
   }
 }
 
-.user-item{
+.chat-body{
+  flex: 1 1 auto;
+  height: calc(100% - 42px);
+
+  >div{
+    height: 100%;
+  }
+}
+
+.user-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 
-  >img{
+  > img {
     width: 40px;
     height: 40px;
     margin-right: 10px;
   }
 
-  >div{
-    span{
+  > div {
+    span {
       display: block;
     }
 
-    .user-item-name{
+    .user-item-name {
       color: #8bc34a;
     }
 
-    .user-item-message{
+    .user-item-message {
       color: #607d8b;
       font-size: 10px;
     }
   }
+}
+
+.message-container {
+  display: flex;
+  align-items: center;
+
+  >p{
+    background-color: #d9f6c2;
+    padding: 16px 32px;
+    border-radius: 8px;
+  }
+
+  &.__other-user {
+    padding-right: 164px;
+    justify-content: flex-start;
+
+    >p{
+      background-color: #e4e3e8;
+      border-top-left-radius: 0;
+    }
+
+  }
+
+  &.__current-user {
+    padding-left: 164px;
+    justify-content: flex-end;
+
+    >p{
+      border-top-right-radius: 0;
+    }
+  }
+}
+
+.message-scroll{
+  overflow-y: scroll;
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
 }

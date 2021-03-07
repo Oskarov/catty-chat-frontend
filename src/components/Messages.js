@@ -3,38 +3,52 @@ import gql from "graphql-tag";
 import {useLazyQuery} from "@apollo/react-hooks";
 import {Col} from "react-bootstrap";
 import {MessagesContext} from "../context/message";
+import MessageItem from "./MessageItem";
 
 export default function Messages() {
 
-    const { users } = useContext(MessagesContext);
-    const selectedUser = users?.find(u=> u.selected == true);
+    const {users, setUserMessages} = useContext(MessagesContext);
+    const selectedUser = users?.find(u => u.selected == true);
+    const messages = selectedUser?.messages
 
     const [getMessages, {loadingMessages, data: messagesData}] = useLazyQuery(GET_MESSAGES);
 
-    useEffect(()=>{
-        if (selectedUser){
-            getMessages({variables: { from: selectedUser.username}});
+    useEffect(() => {
+        if (selectedUser && !selectedUser.messages) {
+            getMessages({variables: {from: selectedUser.username}});
         }
     }, [selectedUser]);
 
+    useEffect(() => {
+        if (messagesData) {
+            console.log(messagesData);
+            setUserMessages(selectedUser.username, messagesData.getMessages);
+        }
+    }, [messagesData])
+
+    let selectedChat;
+    if (!messages && !loadingMessages) {
+        selectedChat = <p>Выбери пользователя</p>
+    } else if (loadingMessages) {
+        selectedChat = <p>Загрузка</p>
+    } else if (messages.length > 0){
+        selectedChat = messages.map(message =>
+            <MessageItem key={message.uuid} message={message}/>
+        )
+    } else {
+        selectedChat = <p>Нет сообщений</p>
+    }
+
     return (
-        <Col xs={8}>
-            {messagesData && messagesData.getMessages.length > 0 ? (
-                messagesData.getMessages.map(message =>
-                    <p key={message.uuid}>
-                        {message.content}
-                    </p>
-                )
-            ) : (
-                'no data'
-            )}
+        <Col xs={8} className="message-scroll">
+            {selectedChat}
         </Col>
     )
 }
 
 
 const GET_MESSAGES = gql`
-    query geMessages($from: String!){
+    query getMessages($from: String!){
         getMessages(from: $from){
             uuid
             from

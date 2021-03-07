@@ -6,16 +6,11 @@ const initialState = {
 
 
 const MessagesContext = createContext({
-    messages: null,
-    setUsers: userData => {
-    },
-    setSelectedUser: userData => {
-    },
-    setMessages: userData => {
-    },
+
 });
 
 function messagesReducer(state, action) {
+    let usersCopy;
     switch (action.type) {
         case 'SET_USERS':
             return {
@@ -23,7 +18,7 @@ function messagesReducer(state, action) {
                 users: action.payload
             }
         case 'SET_SELECTED_USER':
-            const usersCopy = state.users.map(user => ({
+            usersCopy = state.users.map(user => ({
                 ...user,
                 selected: user.username === action.payload
             }))
@@ -33,9 +28,12 @@ function messagesReducer(state, action) {
             }
         case 'SET_USER_MESSAGES':
             const { username, messages} = action.payload
+            usersCopy = [...state.users]
+            const userIndex = usersCopy.findIndex(u => u.username === username);
+            usersCopy[userIndex] = { ...usersCopy[userIndex], messages};
             return {
                 ...state,
-                messages: action.payload
+                users: usersCopy
             }
         default:
             return state;
@@ -59,16 +57,19 @@ function MessagesProvider(props) {
         })
     }
 
-     function setMessages(messages) {
+    function setUserMessages(selectedUser, messagesData){
         dispatch({
-            type: 'SET_MESSAGES',
-            payload: messages
+            type:'SET_USER_MESSAGES',
+            payload: {
+                username: selectedUser,
+                messages: messagesData
+            }
         })
     }
 
     return (
         <MessagesContext.Provider
-            value={{users: state.users, messages: state.messages, setSelectedUser, setUsers, setMessages}} {...props}/>
+            value={{users: state.users, messages: state.messages, setSelectedUser, setUsers, setUserMessages}} {...props}/>
     )
 }
 
