@@ -4,6 +4,7 @@ import {useLazyQuery} from "@apollo/react-hooks";
 import {Col} from "react-bootstrap";
 import {MessagesContext} from "../context/message";
 import MessageItem from "./MessageItem";
+import SendForm from "./SendForm";
 
 export default function Messages() {
 
@@ -21,7 +22,6 @@ export default function Messages() {
 
     useEffect(() => {
         if (messagesData) {
-            console.log(messagesData);
             setUserMessages(selectedUser.username, messagesData.getMessages);
         }
     }, [messagesData])
@@ -40,9 +40,15 @@ export default function Messages() {
     }
 
     return (
-        <Col xs={8} className="message-scroll">
-            {selectedChat}
-        </Col>
+        <>
+            <Col xs={8} className="message-cont">
+                <div className="message-scroll">
+                    {selectedChat}
+                </div>
+                <SendForm />
+            </Col>
+        </>
+
     )
 }
 

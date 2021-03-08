@@ -3,10 +3,6 @@ import {AuthContext} from "../context/auth";
 
 function MessageItem({message}){
     const {user} = useContext(AuthContext);
-
-
-    console.log(message)
-
     const containerClassName = user.username == message.from ? 'message-container __current-user' : 'message-container __other-user';
 
     let messageMarc =
