@@ -16,11 +16,6 @@ function SendForm() {
             content: content.trim()
         },
         onCompleted: data => {
-            let username =  selectedUser.username
-            addMessage({
-                username: username,
-                message: data.sendMessage,
-            })
             setContent('');
         },
         onError: error => {

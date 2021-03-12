@@ -38,7 +38,7 @@ function messagesReducer(state, action) {
         case 'ADD_MESSAGE':
             usersCopy = [...state.users];
             userIndex = usersCopy.findIndex(u => u.username === username);
-            let userUpdated = { ...usersCopy[userIndex], latestMessage: message, messages: [message, ...usersCopy[userIndex].messages]}
+            let userUpdated = { ...usersCopy[userIndex], latestMessage: message, messages: usersCopy[userIndex].messages ? [message, ...usersCopy[userIndex].messages] : null}
             usersCopy[userIndex] = userUpdated;
             return {
                 ...state,
