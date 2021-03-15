@@ -1,16 +1,39 @@
 import {useContext, useState} from "react";
 import {AuthContext} from "../context/auth";
 import {Button, OverlayTrigger, Popover} from "react-bootstrap";
+import gql from "graphql-tag";
+import {useMutation} from "@apollo/react-hooks";
 
 function MessageItem({message}) {
     const {user} = useContext(AuthContext);
     const containerClassName = user.username == message.from ? 'message-container __current-user' : 'message-container __other-user';
-    const reactions = ['❤️', '😆', '😯', '😢', '😡', '👍', '👎']
+    const reactions = ['❤️', '😆', '😯', '😢', '😡', '👍', '👎'];
+
+    const REACT_TO_MESSAGE = gql`
+        mutation reactToMessage($uuid: String! $content: String!){
+            reactToMessage(uuid: $uuid, content: $content){
+                uuid
+            }
+        }
+    `
+
+    const [reactToMessage] = useMutation(REACT_TO_MESSAGE, {
+        onError: error => console.log(error),
+        onCompleted: data => {
+
+        }
+    })
+
     const [showPopover, setShowPopover] = useState(false);
 
     const reactAction = (reaction) => {
         setShowPopover(false);
-        
+        reactToMessage({
+            variables: {
+                uuid: message.uuid,
+                content: reaction
+            }
+        })
     }
 
     const reactButton =
@@ -20,11 +43,12 @@ function MessageItem({message}) {
             show={showPopover}
             onToggle={setShowPopover}
             transition={false}
+            rootClose
             overlay={
                 <Popover classname="rounded-pill">
                     <Popover.Content>
-                        {reactions.map(reaction=>(
-                          <Button variant="link" key={reaction} onClick={()=> reactAction(reaction)}>{reaction}</Button>
+                        {reactions.map(reaction => (
+                            <Button variant="link" key={reaction} onClick={() => reactAction(reaction)}>{reaction}</Button>
                         ))}
                     </Popover.Content>
                 </Popover>
