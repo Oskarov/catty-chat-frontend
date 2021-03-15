@@ -36,6 +36,9 @@ function MessageItem({message}) {
         })
     }
 
+    
+    const reactionIcon = message.reactions[0] ? message.reactions[0].content : '+';
+
     const reactButton =
         <OverlayTrigger
             trigger="click"
@@ -55,7 +58,7 @@ function MessageItem({message}) {
             }
         >
             <Button variant="link" className={user.username == message.from ? 'message-react __user' : 'message-react __other'}>
-                +
+                {reactionIcon}
             </Button>
         </OverlayTrigger>
 
