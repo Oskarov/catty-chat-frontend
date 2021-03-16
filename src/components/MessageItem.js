@@ -17,6 +17,8 @@ function MessageItem({message}) {
         }
     `
 
+
+
     const [reactToMessage] = useMutation(REACT_TO_MESSAGE, {
         onError: error => console.log(error),
         onCompleted: data => {
@@ -36,7 +38,7 @@ function MessageItem({message}) {
         })
     }
 
-    
+
     const reactionIcon = message.reactions[0] ? message.reactions[0].content : '+';
 
     const reactButton =

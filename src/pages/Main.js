@@ -9,8 +9,9 @@ import {MessagesContext} from "../context/message";
 function Main(props) {
 
     const {data: messageData, error: messageError} = useSubscription(NEW_MESSAGE);
+    const {data: reactionData, error: reactionError} = useSubscription(NEW_REACTION);
     const {user} = useContext(AuthContext);
-    const {users, addMessage} = useContext(MessagesContext);
+    const {users, addMessage, addReaction} = useContext(MessagesContext);
 
     useEffect(() => {
         if (messageError) console.log(messageError);
@@ -23,6 +24,18 @@ function Main(props) {
             })
         }
     }, [messageData, messageError])
+
+    useEffect(() => {
+        if (reactionData) {
+            console.log(reactionData);
+            const reaction = reactionData.newReaction;
+            const otherUser = user.username === reaction.Message.to ? reaction.Message.from : reaction.Message.to;
+            addReaction({
+                username: otherUser,
+                reaction,
+            })
+        }
+    }, [reactionData, reactionError])
 
     return (
         <div className="chat-body">
@@ -42,6 +55,23 @@ const NEW_MESSAGE = gql`
             to
             content
             createdAt
+        }
+    }
+`
+
+const NEW_REACTION = gql`
+    subscription  newReaction{
+        newReaction{
+            uuid
+            content
+            createdAt
+            Message{
+                from
+                to
+                uuid
+                createdAt
+                content
+            }
         }
     }
 `
