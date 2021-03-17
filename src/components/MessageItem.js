@@ -50,7 +50,7 @@ function MessageItem({message}) {
             transition={false}
             rootClose
             overlay={
-                <Popover classname="rounded-pill">
+                <Popover className="rounded-pill">
                     <Popover.Content>
                         {reactions.map(reaction => (
                             <Button variant="link" key={reaction} onClick={() => reactAction(reaction)}>{reaction}</Button>
