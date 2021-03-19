@@ -19,11 +19,17 @@ Technology stack:
 
 EN:
 
-...soon
+A simple chat where you can register,
+and then chat with any registered user,
+instantly receiving new messages and as an added bonus
+you can react to messages with emoji (almost like in slack)
 
 RU:
 
-...soon
+Простой чат, в котором можно зарегистрироваться, 
+а затем общаться с любым зарегистрированным пользователем, 
+мгновенно получая новые сообщения и в качестве дополнительной плюшки
+можно реагировать на сообщения при помощи эмоджи (почти как в slack)
 
 ---
 
@@ -36,6 +42,7 @@ RU:
    ```
    PORT=***** #port of react app
    SERVER=http://localhost:****/ #url of server app
+   SUBSCRIPRIONS='ws://localhost:****/graphql #url for sockets
    ```
 5. npm run start
 
